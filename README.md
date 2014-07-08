@@ -26,7 +26,7 @@ FluentAsserter::assertThat( $customer )
 		return $customer->getDiscount();
 	})
 	->isNotEqualTo( 0 )
-	->when( function( $customer ) {
+	->when( function( $discount ) use ($customer) {
 		return $customer->hasDiscount();	
 	})
 	->assert();
