@@ -51,7 +51,7 @@ FluentAsserter::assertThat( $customer )
 		return $customer->getPostcode();
 	})
 	->must( $beAValidPostcode )
-	->withMessage( "Please specify a valid postcode" )
+	->withMessage( "postcode format is not valid" )
 	->assert();
 ```
 
