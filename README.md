@@ -53,5 +53,5 @@ FluentAsserter::assertThat( $customer )
 	->must( $beAValidPostcode )
 	->withMessage( "Please specify a valid postcode" )
 	->assert();
-```php
+```
 
