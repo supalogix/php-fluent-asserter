@@ -66,10 +66,10 @@ class FluentAsserter {
 	public function isGreaterThan( $rhs ) {
 		$this->ruleFor( function( $lhs ) use ( $rhs ) {
 			if( !is_numeric($lhs) )
-				throw new AssertionViolation();
+				throw new IllegalAssertionArgument("the value to compare in the constructor must be numeric or have a closure that returns a number");
 			
 			if( !is_numeric($rhs) )
-				throw new AssertionViolation();
+				throw new IllegalAssertionArgument("the argument for the isGreaterThan method must be numeric");
 			
 			return $lhs > $rhs;
 		});

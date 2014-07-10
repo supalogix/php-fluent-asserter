@@ -4,6 +4,7 @@ require_once "bootstrap.php";
 
 use com\github\supalogix\fluentasserter\FluentAsserter;
 use com\github\supalogix\fluentasserter\AssertionViolation;
+use com\github\supalogix\fluentasserter\IllegalAssertionArgument;
 
 class IsGreaterThanMethodTest extends PHPUnit_Framework_TestCase {
 
@@ -50,11 +51,19 @@ class IsGreaterThanMethodTest extends PHPUnit_Framework_TestCase {
 
 	}
 	
-	public function testNonNumericValueThrowsAssertionViolation() {
-		$this->setExpectedException( AssertionViolation::name );
+	public function testNonNumericConstructorValueThrowsIllegalAssertionArgument() {
+		$this->setExpectedException( IllegalAssertionArgument::name );
 		
 		FluentAsserter::assertThat( "string" )
 			->isGreaterThan( 1 )
+			->assert();
+	}
+	
+	public function testNonNumericArgumentParameterValueThrowsIllegalAssertionArgument() {
+		$this->setExpectedException( IllegalAssertionArgument::name );
+		
+		FluentAsserter::assertThat( 1 )
+			->isGreaterThan( "string" )
 			->assert();
 	}
 }
