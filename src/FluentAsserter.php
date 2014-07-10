@@ -109,6 +109,9 @@ class FluentAsserter {
 	}
 
 	public function must( $closure ) {
+		if( !is_callable($closure) )
+			throw new AssertionViolation();
+		
 		$this->mustClosure = $closure;
 		return $this;
 	}
@@ -123,7 +126,14 @@ class FluentAsserter {
 		$mustClosure = $this->mustClosure;
 
 		if( !empty( $whenClosure ) ) {
-			$shouldNotContinue = !$whenClosure( $this->getValue() );
+			
+			$result = $whenClosure( $this->getValue() );
+			
+			if( !is_bool($result) )
+				throw new AssertionViolation();
+			
+			$shouldNotContinue = !$result;
+			
 			if( $shouldNotContinue )
 				return false;
 		}
