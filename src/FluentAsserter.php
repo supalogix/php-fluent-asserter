@@ -3,6 +3,7 @@
 namespace com\github\supalogix\fluentasserter;
 
 require_once "exception/AssertionViolation.php";
+require_once "exception/IllegalAssertionArgument.php";
 
 class FluentAsserter {
 	private $value;
@@ -110,7 +111,7 @@ class FluentAsserter {
 
 	public function must( $closure ) {
 		if( !is_callable($closure) )
-			throw new AssertionViolation();
+			throw new IllegalAssertionArgument("the must method must be passed a callable argument");
 		
 		$this->mustClosure = $closure;
 		return $this;
@@ -139,7 +140,14 @@ class FluentAsserter {
 		}
 
 		if( !empty( $mustClosure ) ) {
-			$shouldNotContinue = !$mustClosure( $this->getValue() );
+			
+			$result = $mustClosure( $this->getValue() );
+			
+			if( !is_bool($result) )
+				throw new IllegalAssertionArgument("the callable argument for the must method does not return a boolean");
+			
+			$shouldNotContinue = !$result;
+			
 			if( $shouldNotContinue )
 				throw new AssertionViolation($this->message);
 		}

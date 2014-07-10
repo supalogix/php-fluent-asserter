@@ -4,6 +4,7 @@ require_once "bootstrap.php";
 
 use com\github\supalogix\fluentasserter\FluentAsserter;
 use com\github\supalogix\fluentasserter\AssertionViolation;
+use com\github\supalogix\fluentasserter\IllegalAssertionArgument;
 
 class MustMethodTest extends PHPUnit_Framework_TestCase {
 
@@ -35,9 +36,9 @@ class MustMethodTest extends PHPUnit_Framework_TestCase {
 
 	}
 	
-	public function testNonBooleanReturnValueThrowsAssertionViolation() {
+	public function testNonBooleanReturnValueThrowsIllegalAssertionArgument() {
 		
-		$this->setExpectedException( AssertionViolation::name );
+		$this->setExpectedException( IllegalAssertionArgument::name );
 		
 		$customer = new stdClass();
 		
@@ -49,9 +50,9 @@ class MustMethodTest extends PHPUnit_Framework_TestCase {
 
 	}
 	
-	public function testNonFunctionInputThrowsAssertionViolation() {
+	public function testNonFunctionInputThrowsIllegalAssertionArgument() {
 		
-		$this->setExpectedException( AssertionViolation::name );
+		$this->setExpectedException( IllegalAssertionArgument::name );
 		
 		$customer = new stdClass();
 		
