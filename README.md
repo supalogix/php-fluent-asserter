@@ -21,10 +21,12 @@ FluentAsserter::assertThat( $customer )
 ```
 
 ```php
+$customerDiscount = function( $customer ) {
+	return $customer->getDiscount();
+};
+
 FluentAsserter::assertThat( $customer )
-	->withClosure( function( $customer ) {
-		return $customer->getDiscount();
-	})
+	->withClosure( $customerDiscount )
 	->isNotEqualTo( 0 )
 	->when( function( $discount ) use ($customer) {
 		return $customer->hasDiscount();	
@@ -33,25 +35,29 @@ FluentAsserter::assertThat( $customer )
 ```
 
 ```php
+$customerAddress = function( $customer ) {
+	return $customer->getAddress();
+};
+
 FluentAsserter::assertThat( $customer ) 
-	->withClosure( function( $customer ) {
-		return $customer->getAddress();
-	})	
+	->withClosure( $customerAddress )	
 	->hasLength( 20, 250 )
 	->assert();
 ```
 
 ```php
-$beAValidPostcode = function( $postcode ) {
+$customerPostalCode = function( $customer ) {
+	return $customer->getPostalcode();
+};
+
+$beAValidPostcode = function( $postalcode ) {
 	// postal code validation
 };
 
 FluentAsserter::assertThat( $customer ) 
-	->withClosure( function( $customer ) {
-		return $customer->getPostcode();
-	})
-	->must( $beAValidPostcode )
-	->withMessage( "postcode format is not valid" )
+	->withClosure( $customerPostalCode )
+	->must( $beAValidPostalcode )
+	->withMessage( "postalcode format is not valid" )
 	->assert();
 ```
 
