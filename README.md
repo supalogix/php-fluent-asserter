@@ -9,12 +9,14 @@ Examples
 --------
 
 ```php
+// Assert that the amount is greater than zero
 FluentAsserter::assertThat( $amount )
 	->isGreaterThan(0)
 	->assert();
 ```
 
 ```php
+// Assert that the customer object is not empty
 FluentAsserter::assertThat( $customer )
 	->isNotEmpty()
 	->assert();
@@ -25,10 +27,11 @@ $customerDiscount = function( $customer ) {
 	return $customer->getDiscount();
 };
 
+// Assert that if a customer has a discount the the discount is not zero
 FluentAsserter::assertThat( $customer )
 	->withClosure( $customerDiscount )
-	->isNotEqualTo( 0 )
-	->when( function( $discount ) use ($customer) {
+	->isGreaterThan( 0 )
+	->when( function() use ($customer) {
 		return $customer->hasDiscount();	
 	})
 	->assert();
@@ -39,6 +42,7 @@ $customerAddress = function( $customer ) {
 	return $customer->getAddress();
 };
 
+// Assert that the customer's address is between 20 and 250 characters long
 FluentAsserter::assertThat( $customer ) 
 	->withClosure( $customerAddress )	
 	->hasLength( 20, 250 )
@@ -54,6 +58,7 @@ $beAValidPostcode = function( $postalcode ) {
 	// postal code validation
 };
 
+// Assert that the customer has a valid postal code
 FluentAsserter::assertThat( $customer ) 
 	->withClosure( $customerPostalCode )
 	->must( $beAValidPostalcode )
